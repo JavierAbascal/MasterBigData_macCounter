@@ -9,7 +9,7 @@ mkdir -p /tmp/scanning/upload
 
 
 echo `date +"%Y-%m-%d_%H-%M-%S"`":" >> $_logFile
-echo **************************** STARTING CAPTURING ********************************* >> $_logFile
+echo "**************************** STARTING CAPTURING *********************************" >> $_logFile
 
 # Capturing starts
 
@@ -28,10 +28,10 @@ iwconfig fish5 mode Monitor
 sleep 2
 ifconfig fish5 up
 
-tcpdump -tttt -i fish5 -e -s 256 -G "$sendDataInterval" -w "$_captureFile"%F-%T -z /home/magictaly/work/MasterBigData_macCounter/scripts/send-captured-data.sh type mgt subtype probe-req 2 >> $_logFile
+tcpdump -tttt -i fish5 -e -s 256 -G "$sendDataInterval" -w "$_captureFile"%F-%T -z /home/magictaly/work/MasterBigData_macCounter/scripts/send-captured-data.sh type mgt subtype probe-req 2>> $_logFile
 
 echo `date +"%Y-%m-%d_%H-%M-%S"`":" >> $_logFile
-echo **********************ERROR: RESET TCPDUMP++++++++++++++++++++++++++++++ >>$_logfile
+echo "**********************ERROR: RESET TCPDUMP+++++++++++++++++++++++++++" >> $_logFile
 
 done
 
