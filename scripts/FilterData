@@ -1,0 +1,31 @@
+#!/bin/awk -f
+BEGIN {
+    OFS=";";
+}
+{
+    if (NF < 20 || index($0,"Probe Request") <= 0){
+        next;
+    } else if ($14 == "BSSID:Broadcast") {
+        mac = toupper(substr($16,4,17));
+        long_ssid = index($21,")") -2;
+        ssid = substr($21,2,long_ssid);
+        date = $1;
+        time = $2;
+        rssi = $10;
+        bssid = "Broadcast";
+    } else if ($14 ~ /BSSID:[0-9a-f][0-9a-f]*/) {
+        mac = toupper(substr($20,4,17));
+        long_ssid = index($25,")") -2;
+        ssid = substr($25,2,long_ssid);
+        date = $1;
+        time = $2;
+        rssi = $10;
+        bssid = substr($14,7,17);
+    }
+    if (debug >= 1){
+        print id, mac, date, time, rssi, bssid, ssid, $0;
+    } else {
+        print id, mac, date, time, rssi, bssid, ("\"" ssid "\"");
+    }
+}
+END {}
